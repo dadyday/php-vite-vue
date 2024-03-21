@@ -1,0 +1,25 @@
+parameters:
+
+tracy:
+    dumpTheme: dark
+    showBar: true
+
+application:
+	mapping:
+		*: App\Presenters\*Presenter
+
+latte:
+	extensions:
+		- App\ViteExtension(%wwwDir%, %VITE_PATH%, %VITE_HOST%)
+
+database:
+	dsn: 'sqlite:%rootDir%/data/demo'
+
+services:
+	- App\RouterFactory::createRouter
+	- App\Model\Model
+
+	entity:
+		class: Nette\Database\Table\Selection
+		factory: @App\Model\Model::create('entity')
+
