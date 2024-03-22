@@ -1,15 +1,13 @@
 <script setup>
 import { useTheme } from 'vuetify'
-import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
+import VerticalNavSectionTitle from './VerticalNavSectionTitle.vue'
+import VerticalNavLayout from './VerticalNavLayout.vue'
+import VerticalNavLink from './VerticalNavLink.vue'
+import NavbarThemeSwitcher from './NavbarThemeSwitcher.vue'
+import UserProfile from './UserProfile.vue'
+import Footer from './Footer.vue'
 import upgradeBannerDark from '@images/pro/upgrade-banner-dark.png'
 import upgradeBannerLight from '@images/pro/upgrade-banner-light.png'
-import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
-import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
-
-// Components
-import Footer from '@/layouts/components/Footer.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
 
 const vuetifyTheme = useTheme()
 

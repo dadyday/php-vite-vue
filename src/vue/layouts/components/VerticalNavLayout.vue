@@ -1,6 +1,6 @@
 <script>
 import { useDisplay } from 'vuetify'
-import VerticalNav from '@layouts/components/VerticalNav.vue'
+import VerticalNav from './VerticalNav.vue'
 
 export default defineComponent({
   setup(props, { slots }) {
@@ -68,7 +68,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@use "@configured-variables" as variables;
+@use "@styles/variables/template" as variables;
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
 

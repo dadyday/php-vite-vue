@@ -3,15 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: '/dashboard' },
+    // { path: '/', redirect: '/' },
     {
       path: '/',
-      component: () => import('../layouts/default.vue'),
+      // component: () => import('../layouts/default.vue'),
       children: [
         {
-          path: 'dashboard',
-          component: () => import('../pages/dashboard.vue'),
+          path: '',
+          component: () => import('../pages/Main.vue'),
         },
+      /*
         {
           path: 'account-settings',
           component: () => import('../pages/account-settings.vue'),
@@ -54,6 +55,7 @@ const router = createRouter({
           path: '/:pathMatch(.*)*',
           component: () => import('../pages/[...all].vue'),
         },
+    */
       ],
     },
   ],

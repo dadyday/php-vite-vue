@@ -1,5 +1,5 @@
 // placeholders
-@use "@configured-variables" as variables;
+@use "../../../styles/variables/template" as variables;
 
 %boxed-content {
   @at-root #{&}-spacing {

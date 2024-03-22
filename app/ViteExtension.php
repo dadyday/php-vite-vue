@@ -16,7 +16,7 @@ class ViteExtension extends Latte\Extension {
 	public function __construct(string $wwwDir, string $distPath, string $viteHost) {
 		$this->wwwDir = $wwwDir;
 		$this->distPath = $distPath;
-		$this->viteHost = $viteHost.$distPath;
+		$this->viteHost = $viteHost;
 		$this->checkDev();
 	}
 
@@ -51,7 +51,7 @@ class ViteExtension extends Latte\Extension {
 	}
 
 	function jsTags(string $entry): string {
-		$url = $this->devMode ? $this->viteHost . '/' . $entry : $this->assetUrl($entry);
+		$url = $this->devMode ? $this->viteHost . $this->distPath . '/' . $entry : $this->assetUrl($entry);
 		if (!$url) return '';
 
 		$aReturn = [];

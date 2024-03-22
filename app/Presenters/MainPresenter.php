@@ -15,21 +15,19 @@ final class MainPresenter extends BasePresenter {
 	public Selection $oEntities;
 
 
-	protected function share(array $aProp): array {
-		return array_merge([
-			'name' => 'World',
-		], parent::share($aProp));
+	public function renderApp(): void {
+		//$this->render();
 	}
 
 	public function renderDefault(): void {
-		$this->inertia([
+		$this->render('404', [
 			'name' => 'Universe',
 			'frameworks' => [
 				'Nette',
 				'Vue',
 				'Inertia',
 			],
-		], 'Home');
+		]);
 	}
 
 	public function renderEntities(int $page = null, string $search = null, int $sleep = 0): void {
@@ -50,7 +48,7 @@ final class MainPresenter extends BasePresenter {
 
 
 		sleep($sleep);
-		$this->inertia([
+		$this->render([
 			'entities' => [
 				'currentPage' => $oPaginator->page,
 				'perPage' => $oPaginator->itemsPerPage,
@@ -72,7 +70,7 @@ final class MainPresenter extends BasePresenter {
 	}
 
 	public function renderAssistant(): void {
-		$this->inertia([
+		$this->render([
 			'hosts' => [
 				'foo' => [ 'name' => 'Foo Host', 'host' => 'foo.example.com', 'available' => true],
 				'bar' => [ 'name' => 'Bar Host', 'host' => 'bar.example.com', 'available' => true],

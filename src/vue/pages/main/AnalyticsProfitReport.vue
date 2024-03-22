@@ -4,7 +4,7 @@ import {
   useDisplay,
   useTheme,
 } from 'vuetify'
-import { hexToRgb } from '@layouts/utils'
+import { hexToRgb } from '@/layouts/utils'
 
 const vuetifyTheme = useTheme()
 const display = useDisplay()

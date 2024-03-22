@@ -13,10 +13,14 @@ class BasePresenter extends InertiaPresenter {
 	protected array $aProp = [];
 	protected ?string $link = null;
 
-	public function inertia(array $aProp = [], ?string $component = null, ?string $link = null) {
-		$this->aProp = $aProp;
-		$this->component = $component;
-		$this->link = $link;
+	public function render(...$aArg): void {
+		foreach ($aArg as $arg) {
+			if (is_array($arg)) $this->aProp = arg;
+			else if (is_string($arg)) {
+				if ($arg[0] === '/') $this->link = $arg;
+				else $this->component = $arg;
+			}
+		}
 	}
 
 	protected function share(array $aProp): array {

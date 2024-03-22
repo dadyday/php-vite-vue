@@ -20,7 +20,7 @@ const utils_1 = require("@iconify/utils");
 const sources = {
     svg: [
         {
-            dir: 'resources/images/iconify-svg',
+            dir: 'src/images/iconify-svg',
             monotone: false,
             prefix: 'custom',
         },
