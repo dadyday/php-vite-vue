@@ -1,8 +1,9 @@
 <script setup>
 const props = defineProps({
   errorCode: {
-    type: String,
+    type: [Number, String],
     required: false,
+	  default: 404
   },
   errorTitle: {
     type: String,

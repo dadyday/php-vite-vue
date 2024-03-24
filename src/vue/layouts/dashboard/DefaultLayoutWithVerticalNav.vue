@@ -14,6 +14,21 @@ const vuetifyTheme = useTheme()
 const upgradeBanner = computed(() => {
   return vuetifyTheme.global.name.value === 'light' ? upgradeBannerLight : upgradeBannerDark
 })
+
+const menu = [
+	{ title: 'Foo'             , icon: 'bx-home'                , to: '/foo' },
+	{ title: 'Account Settings', icon: 'mdi-account-cog-outline', to: '/account-settings' },
+	{ heading: 'Pages' },
+	{ title: 'Login'           , icon: 'bx-log-in'              , to: '/login' },
+	{ title: 'Register'        , icon: 'bx-user-plus'           , to: '/register' },
+	{ title: 'Error'           , icon: 'bx-info-circle'         , to: '/no-existence' },
+	{ heading: 'User' },
+	{ title: 'Typography'      , icon: 'mdi-alpha-t-box-outline', to: '/typography' },
+	{ title: 'Icons'           , icon: 'bx-show'                , to: '/icons' },
+	{ title: 'Cards'           , icon: 'bx-credit-card'         , to: '/cards' },
+	{ title: 'Tables'          , icon: 'bx-table'               , to: '/tables' },
+	{ title: 'Form Layouts'    , icon: 'mdi-form-select'        , to: '/form-layouts' },
+];
 </script>
 
 <template>
@@ -67,90 +82,13 @@ const upgradeBanner = computed(() => {
     </template>
 
     <template #vertical-nav-content>
-      <VerticalNavLink
-        :item="{
-          title: 'Dashboard',
-          icon: 'bx-home',
-          to: '/dashboard',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Account Settings',
-          icon: 'mdi-account-cog-outline',
-          to: '/account-settings',
-        }"
-      />
-
-      <!-- 👉 Pages -->
-      <VerticalNavSectionTitle
-        :item="{
-          heading: 'Pages',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Login',
-          icon: 'bx-log-in',
-          to: '/login',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Register',
-          icon: 'bx-user-plus',
-          to: '/register',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Error',
-          icon: 'bx-info-circle',
-          to: '/no-existence',
-        }"
-      />
-
-      <!-- 👉 User Interface -->
-      <VerticalNavSectionTitle
-        :item="{
-          heading: 'User Interface',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Typography',
-          icon: 'mdi-alpha-t-box-outline',
-          to: '/typography',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Icons',
-          icon: 'bx-show',
-          to: '/icons',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Cards',
-          icon: 'bx-credit-card',
-          to: '/cards',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Tables',
-          icon: 'bx-table',
-          to: '/tables',
-        }"
-      />
-      <VerticalNavLink
-        :item="{
-          title: 'Form Layouts',
-          icon: 'mdi-form-select',
-          to: '/form-layouts',
-        }"
-      />
+	    <template
+				v-for="(item, index) in menu"
+				:key="index"
+			>
+				<VerticalNavLink v-if="item.to" :item="item" />
+				<VerticalNavSectionTitle v-else :item="item" />
+			</template>
     </template>
 
     <template #after-vertical-nav-items>

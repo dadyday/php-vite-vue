@@ -68,7 +68,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@use "@styles/variables/template" as variables;
+@use "@configured-variables" as variables;
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
 

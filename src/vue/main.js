@@ -1,7 +1,8 @@
 /* eslint-disable import/order */
 import {createInertiaApp, Head, Link} from '@inertiajs/vue3'
 import {createApp, h} from 'vue'
-import Layout from "@/layouts/default.vue";
+import Layout from "@layouts/Dashboard.vue";
+import Error from "@pages/Error.vue";
 
 import router from '@/router'
 import { createPinia } from 'pinia'
@@ -10,7 +11,7 @@ import { loadFonts } from '@/plugins/webfontloader'
 
 import '@/@iconify/icons-bundle'
 import '@core-scss/template/index.scss'
-import './layouts/styles/index.scss'
+import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
 
 loadFonts()
@@ -18,10 +19,14 @@ loadFonts()
 
 createInertiaApp({
     resolve: (name) => {
-        return import(`./pages/${name}.vue`).then((page) => {
-            page.default.layout ??= Layout
-            return page
-        })
+        const pages = import.meta.glob('./pages/**/*.vue', { eager: true })
+        let page = pages[`./pages/${name}.vue`]?.default
+        if (!page) {
+            console.error(`resolving page '${name}' failed`)
+            page = Error
+        }
+        page.layout ??= Layout
+        return page
     },
     setup({el, App, props, plugin}) {
         createApp({render: () => h(App, props)})

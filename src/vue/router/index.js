@@ -9,53 +9,58 @@ const router = createRouter({
       // component: () => import('../layouts/default.vue'),
       children: [
         {
-          path: '',
-          component: () => import('../pages/Main.vue'),
-        },
-      /*
-        {
-          path: 'account-settings',
-          component: () => import('../pages/account-settings.vue'),
+          path: '/',
+          component: () => import('@pages/Start.vue'),
         },
         {
-          path: 'typography',
-          component: () => import('../pages/typography.vue'),
+          path: 'foo',
+          component: () => import('@pages/Foo.vue'),
         },
-        {
-          path: 'icons',
-          component: () => import('../pages/icons.vue'),
-        },
-        {
-          path: 'cards',
-          component: () => import('../pages/cards.vue'),
-        },
-        {
-          path: 'tables',
-          component: () => import('../pages/tables.vue'),
-        },
-        {
-          path: 'form-layouts',
-          component: () => import('../pages/form-layouts.vue'),
-        },
-      ],
-    },
-    {
-      path: '/',
-      component: () => import('../layouts/blank.vue'),
-      children: [
-        {
-          path: 'login',
-          component: () => import('../pages/login.vue'),
-        },
-        {
-          path: 'register',
-          component: () => import('../pages/register.vue'),
-        },
+        //{
+        //  path: '/icons',
+        //  component: () => import('../pages/Icons.vue'),
+        //},
         {
           path: '/:pathMatch(.*)*',
-          component: () => import('../pages/[...all].vue'),
+          component: () => import('@pages/Error.vue'),
         },
-    */
+        /*
+        {
+          path: 'test',
+          component: () => import('../pages/Test.vue'),
+        },
+
+          {
+            path: 'typography',
+            component: () => import('../pages/typography.vue'),
+          },
+          {
+            path: 'cards',
+            component: () => import('../pages/cards.vue'),
+          },
+          {
+            path: 'tables',
+            component: () => import('../pages/tables.vue'),
+          },
+          {
+            path: 'form-layouts',
+            component: () => import('../pages/form-layouts.vue'),
+          },
+        ],
+      },
+      {
+        path: '/',
+        component: () => import('../layouts/blank.vue'),
+        children: [
+          {
+            path: 'login',
+            component: () => import('../pages/login.vue'),
+          },
+          {
+            path: 'register',
+            component: () => import('../pages/register.vue'),
+          },
+      */
       ],
     },
   ],

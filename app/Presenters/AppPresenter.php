@@ -8,25 +8,43 @@ namespace App\Presenters;
 use Nette\Database\Table\Selection;
 use Nette\Utils\Paginator;
 
-final class MainPresenter extends BasePresenter {
+final class AppPresenter extends BasePresenter {
 
 
 	/** @var Selection @inject */
 	public Selection $oEntities;
 
-
-	public function renderApp(): void {
-		//$this->render();
+	public function renderMain(): void {
+		$this->render('Start', [
+			'user' => 'John Doe'
+		]);
 	}
 
+	public function actionDefault($view): void {
+	}
+
+	function renderFoo() {
+		$this->render('Foo', '/foo?bar', ['name' => 'foobar']);
+	}
+
+
+	/*
+	public function actionDefault($view): void {
+		static $aView = ['icons'];
+		if (in_array($view, $aView)) $this->render(lcfirst($view));
+		else $this->renderError( 404, "View '$view' not found");
+	}
+
+
 	public function renderDefault(): void {
-		$this->render('404', [
-			'name' => 'Universe',
-			'frameworks' => [
-				'Nette',
-				'Vue',
-				'Inertia',
-			],
+		// $this->render($this->view);
+	}
+
+
+	public function renderError($code, $message): void {
+		$this->render('Error', [
+			'code' => $code,
+			'message' => $message,
 		]);
 	}
 
@@ -90,4 +108,5 @@ final class MainPresenter extends BasePresenter {
 			],
 		], 'Assistant');
 	}
+*/
 }

@@ -54,8 +54,8 @@ const handleNavScroll = evt => {
     <!-- 👉 Header -->
     <div class="nav-header">
       <slot name="nav-header">
-        <RouterLink
-          to="/"
+        <Link
+          href="/"
           class="app-logo d-flex align-center gap-x-3 app-title-wrapper"
         >
           <div
@@ -66,7 +66,7 @@ const handleNavScroll = evt => {
           <h1 class="leading-normal">
             sneat
           </h1>
-        </RouterLink>
+        </Link>
       </slot>
     </div>
     <slot name="before-nav-items">

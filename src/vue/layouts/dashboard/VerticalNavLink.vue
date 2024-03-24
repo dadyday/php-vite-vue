@@ -13,9 +13,9 @@ const props = defineProps({
     :class="{ disabled: item.disable }"
   >
     <Component
-      :is="item.to ? 'RouterLink' : 'a'"
-      :to="item.to"
-      :href="item.href"
+      :is="item.to ? 'Link' : 'a'"
+      :x-to="item.to"
+      :href="item.to"
     >
       <VIcon
         :icon="item.icon"

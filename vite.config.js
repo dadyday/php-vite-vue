@@ -52,6 +52,7 @@ export default defineConfig({
       '@core-scss': fileURLToPath(new URL('./src/styles/@core', import.meta.url)),
       '@core': fileURLToPath(new URL('./src/vue/@core', import.meta.url)),
       '@layouts': fileURLToPath(new URL('./src/vue/layouts', import.meta.url)),
+      '@pages': fileURLToPath(new URL('./src/vue/pages', import.meta.url)),
       '@images': fileURLToPath(new URL('./src/images/', import.meta.url)),
       '@styles': fileURLToPath(new URL('./src/styles/', import.meta.url)),
       '@configured-variables': fileURLToPath(new URL('./src/styles/variables/_template.scss', import.meta.url)),

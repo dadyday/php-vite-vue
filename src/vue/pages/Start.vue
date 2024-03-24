@@ -1,16 +1,18 @@
 <script setup>
-import AnalyticsCongratulations from './main/AnalyticsCongratulations.vue'
-import AnalyticsFinanceTabs from './main/AnalyticsFinanceTab.vue'
-import AnalyticsOrderStatistics from './main/AnalyticsOrderStatistics.vue'
-import AnalyticsProfitReport from './main/AnalyticsProfitReport.vue'
-import AnalyticsTotalRevenue from './main/AnalyticsTotalRevenue.vue'
-import AnalyticsTransactions from './main/AnalyticsTransactions.vue'
+import AnalyticsCongratulations from './start/AnalyticsCongratulations.vue'
+import AnalyticsFinanceTabs from './start/AnalyticsFinanceTab.vue'
+import AnalyticsOrderStatistics from './start/AnalyticsOrderStatistics.vue'
+import AnalyticsProfitReport from './start/AnalyticsProfitReport.vue'
+import AnalyticsTotalRevenue from './start/AnalyticsTotalRevenue.vue'
+import AnalyticsTransactions from './start/AnalyticsTransactions.vue'
 
 // 👉 Images
 import chart from '@images/cards/chart-success.png'
 import card from '@images/cards/credit-card-primary.png'
 import paypal from '@images/cards/paypal-error.png'
 import wallet from '@images/cards/wallet-info.png'
+
+
 </script>
 
 <template>

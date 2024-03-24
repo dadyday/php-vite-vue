@@ -1,15 +1,18 @@
 <script setup>
 import { useTheme } from 'vuetify'
 import {hexToRgb} from "@/layouts/utils";
-import DefaultLayoutWithVerticalNav from './components/DefaultLayoutWithVerticalNav.vue'
+import DefaultLayoutWithVerticalNav from './dashboard/DefaultLayoutWithVerticalNav.vue'
 
 const { global } = useTheme()
+const nav = [
+	{}
+]
 </script>
 
 <template>
 	<VApp :style="`--v-global-theme-primary: ${hexToRgb(global.current.value.colors.primary)}`">
 		<DefaultLayoutWithVerticalNav>
-			<RouterView />
+			<slot />
 		</DefaultLayoutWithVerticalNav>
 	</VApp>
 
@@ -17,5 +20,5 @@ const { global } = useTheme()
 
 <style lang="scss">
 // As we are using `layouts` plugin we need its styles to be imported
-@use "@layouts/styles/default-layout";
+@use "./styles/default-layout";
 </style>

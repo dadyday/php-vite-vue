@@ -10,9 +10,9 @@ use Nette\Application\Routers\RouteList;
 final class RouterFactory {
 	public static function createRouter(): RouteList {
 		$router = new RouteList;
-		$router->addRoute('/', 'Main:app');
-		$router->addRoute('/<action>', 'Main:default');
-		$router->addRoute('/entities?[page=<page>]]', 'Main:entities');
+		$router->addRoute('/', 'App:main');
+		$router->addRoute('/<view>', 'App:default');
+		//$router->addRoute('/entities?[page=<page>]]', 'Main:entities');
 		return $router;
 	}
 }
