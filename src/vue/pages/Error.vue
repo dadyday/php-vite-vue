@@ -25,7 +25,7 @@ defineProps(['code', 'message', 'desc'])
         class="mx-auto"
       />
       <VBtn
-        to="/"
+        href="/"
         class="mt-10"
       >
         Back to Home

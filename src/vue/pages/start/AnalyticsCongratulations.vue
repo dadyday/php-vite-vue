@@ -1,10 +1,13 @@
 <script setup>
+import {usePage} from "@inertiajs/vue3";
 import { useTheme } from 'vuetify'
 import illustrationJohnDark from '@images/cards/illustration-john-dark.png'
 import illustrationJohnLight from '@images/cards/illustration-john-light.png'
 
 const { global } = useTheme()
 const illustrationJohn = computed(() => global.name.value === 'dark' ? illustrationJohnDark : illustrationJohnLight)
+
+const user = usePage().props.user
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const illustrationJohn = computed(() => global.name.value === 'dark' ? illustrat
       >
         <VCardItem>
           <VCardTitle class="text-md-h5 text-primary">
-            Congratulations John! 🎉
+            Congratulations {{ user.name }}! 🎉
           </VCardTitle>
         </VCardItem>
 

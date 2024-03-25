@@ -15,6 +15,33 @@ latte:
 database:
 	dsn: 'sqlite:%rootDir%/data/demo'
 
+security:
+	authentication:
+		# nach welcher Zeit der Inaktivität wird der Benutzer abgemeldet
+		expiration: 30 minutes      # (string) Standardwert ist nicht gesetzt
+		# wo Informationen über den angemeldeten Benutzer gespeichert werden sollen
+		storage: session            # (session|cookie) Voreinstellung ist session
+
+	users:
+		# Name: Passwort
+		john: demo
+
+		# Name, Passwort, Rolle und andere in der Identität verfügbare Daten
+		admin:
+			password: demo123
+			roles: [admin]
+			data:
+
+	roles:
+		guest:
+		user: [guest] # erbt von guest
+		admin: [user] # erbt von user
+
+	resources:
+		foo:
+		# bar: [foo]  # Ressource erbt von foo
+		baz:
+
 services:
 	- App\RouterFactory::createRouter
 	- App\Model\Model

@@ -11,6 +11,7 @@ final class RouterFactory {
 	public static function createRouter(): RouteList {
 		$router = new RouteList;
 		$router->addRoute('/', 'App:main');
+		$router->addRoute('/login', 'App:login');
 		$router->addRoute('/<view>', 'App:default');
 		//$router->addRoute('/entities?[page=<page>]]', 'Main:entities');
 		return $router;

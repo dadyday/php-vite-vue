@@ -12,11 +12,24 @@ import card from '@images/cards/credit-card-primary.png'
 import paypal from '@images/cards/paypal-error.png'
 import wallet from '@images/cards/wallet-info.png'
 
+const props = defineProps({
+	lastLogin: String,
+	user: null,
+})
+const showLastLogin = ref(!!props.lastLogin)
 
 </script>
 
 <template>
   <VRow>
+	  <v-snackbar
+		  v-model="showLastLogin"
+		  :timeout="2000"
+		  elevation="24"
+	  >
+		  Hello {{ user.name }}! Your last Login was at {{ lastLogin }}.
+	  </v-snackbar>
+
     <!-- 👉 Congratulations -->
     <VCol
       cols="12"

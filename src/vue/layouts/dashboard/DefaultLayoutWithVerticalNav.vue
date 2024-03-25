@@ -1,4 +1,5 @@
 <script setup>
+import {usePage} from "@inertiajs/vue3";
 import { useTheme } from 'vuetify'
 import VerticalNavSectionTitle from './VerticalNavSectionTitle.vue'
 import VerticalNavLayout from './VerticalNavLayout.vue'
@@ -6,18 +7,12 @@ import VerticalNavLink from './VerticalNavLink.vue'
 import NavbarThemeSwitcher from './NavbarThemeSwitcher.vue'
 import UserProfile from './UserProfile.vue'
 import Footer from './Footer.vue'
-import upgradeBannerDark from '@images/pro/upgrade-banner-dark.png'
-import upgradeBannerLight from '@images/pro/upgrade-banner-light.png'
 
 const vuetifyTheme = useTheme()
 
-const upgradeBanner = computed(() => {
-  return vuetifyTheme.global.name.value === 'light' ? upgradeBannerLight : upgradeBannerDark
-})
-
 const menu = [
-	{ title: 'Foo'             , icon: 'bx-home'                , to: '/foo' },
-	{ title: 'Account Settings', icon: 'mdi-account-cog-outline', to: '/account-settings' },
+	{ title: 'Foo'             , icon: 'bx-home'                , to: '/foo', roles: [] },
+	{ title: 'Bar'             , icon: 'mdi-account-cog-outline', to: '/bar', roles: ['admin'] },
 	{ heading: 'Pages' },
 	{ title: 'Login'           , icon: 'bx-log-in'              , to: '/login' },
 	{ title: 'Register'        , icon: 'bx-user-plus'           , to: '/register' },
@@ -29,6 +24,13 @@ const menu = [
 	{ title: 'Tables'          , icon: 'bx-table'               , to: '/tables' },
 	{ title: 'Form Layouts'    , icon: 'mdi-form-select'        , to: '/form-layouts' },
 ];
+
+const user = usePage().props.user
+const userMenu = computed(() => menu.filter((item) => {
+	let ok = !item.roles?.length // allow if no role defined
+	if (!ok) item.roles.forEach((role) => ok |= user.roles.includes(role))
+	return ok
+}))
 </script>
 
 <template>
@@ -83,7 +85,7 @@ const menu = [
 
     <template #vertical-nav-content>
 	    <template
-				v-for="(item, index) in menu"
+				v-for="(item, index) in userMenu"
 				:key="index"
 			>
 				<VerticalNavLink v-if="item.to" :item="item" />
@@ -93,20 +95,6 @@ const menu = [
 
     <template #after-vertical-nav-items>
       <!-- 👉 illustration -->
-      <a
-        href="https://themeselection.com/item/sneat-vuetify-vuejs-laravel-admin-template"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="margin-left: 7px;"
-      >
-        <img
-          :src="upgradeBanner"
-          alt="upgrade-banner"
-          transition="scale-transition"
-          class="upgrade-banner mx-auto"
-          style="max-width: 230px;"
-        >
-      </a>
     </template>
 
     <!-- 👉 Pages -->

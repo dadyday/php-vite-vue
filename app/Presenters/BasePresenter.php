@@ -4,10 +4,16 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
+use Nette;
+use Nette\Utils\Json;
+use Nette\Utils\JsonException;
 use PL\NetteInertia\InertiaPresenter;
 
 
 class BasePresenter extends InertiaPresenter {
+
+
+	protected $oData = null;
 
 	protected ?string $component = null;
 	protected array $aProp = [];
@@ -18,6 +24,48 @@ class BasePresenter extends InertiaPresenter {
 		if ($view) $this->setView($view);
 		parent::startup();
 	}
+
+
+	function isJsonRequest() {
+		return $this->getHttpRequest()->getHeader('content-type') === 'application/json';
+	}
+
+	function hasData() {
+		return $this->getHttpRequest()->isMethod('POST');
+	}
+
+	function initJsonRequest() {
+		if ($this->isJsonRequest() && is_null($this->oData)) {
+			$rawBody = $this->getHttpRequest()->getRawBody();
+			try {
+				$this->oData = $rawBody ? Json::decode($rawBody) : false;
+			}
+			catch (JsonException $e) {
+				$this->oData = false;
+			}
+		}
+	}
+
+	function getData(?string $name = null, $default = null) {
+		$this->initJsonRequest();
+		return !$name ? $this->oData : $this->oData->$name ?? $default;
+	}
+
+
+
+	function view($view, $aProp = null): void {
+		$this->setView($view);
+		$this->render($view, $aProp ?? []);
+	}
+
+	function error(string $message = '', int $httpCode = Nette\Http\IResponse::S404_NOT_FOUND): void {
+		$this->setView('error');
+		$this->render('error', [
+			'code' => $httpCode,
+			'message' => $message,
+		]);
+	}
+
 
 	public function render(...$aArg): void {
 		foreach ($aArg as $arg) {
@@ -61,6 +109,7 @@ class BasePresenter extends InertiaPresenter {
 			'action' => $this->action,
 			'view' => $this->view,
 			'params' => $this->getParameters(),
+			'data' => $this->getData(),
 			'template' => $this->template->getFile(),
 			'component' => $this->component,
 			'link' => $this->link,
