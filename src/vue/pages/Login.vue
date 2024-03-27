@@ -1,8 +1,12 @@
 <script setup>
+import {useI18n} from "vue-i18n";
 import {router} from "@inertiajs/vue3";
 import AuthProvider from '@pages/login/AuthProvider.vue'
 import logo from '@images/logo.svg?raw'
 import Blank from "@layouts/Blank.vue";
+import LangSwitch from "@/components/LangSwitch.vue";
+
+const $t = useI18n().t
 
 defineProps({
 	error: String
@@ -19,7 +23,7 @@ const form = ref({
 })
 
 const rules = {
-	required: value => !!value || 'Field is required',
+	required: (value) => !!value || $t('error.validation.field-required'),
 }
 
 function login() {
@@ -27,6 +31,10 @@ function login() {
 }
 
 const isPasswordVisible = ref(false)
+if (import.meta.env.DEV) {
+	form.value.userId = 'admin'
+	form.value.password = 'demo123'
+}
 </script>
 
 <template>
@@ -45,15 +53,15 @@ const isPasswordVisible = ref(false)
           </div>
         </template>
 
-        <VCardTitle class="text-2xl font-weight-bold">Demo Framework</VCardTitle>
+        <VCardTitle class="text-2xl font-weight-bold">{{ $t('login.title') }}</VCardTitle>
       </VCardItem>
 
       <VCardText class="pt-2">
         <h5 class="text-h5 mb-1">
-          Welcome 👋🏻
+	        {{ $t('login.welcome') }}
         </h5>
         <p class="mb-0">
-          Please sign-in to your account and start the adventure
+          {{ $t('login.pleaseSignin') }}
         </p>
       </VCardText>
 
@@ -68,9 +76,10 @@ const isPasswordVisible = ref(false)
               <VTextField
                 v-model="form.userId"
                 autofocus
-                placeholder="johndoe@email.com"
-                label="Email or Username"
+                :placeholder="$t('placeholder.email')"
+                :label="$t('label.email-or-user')"
 	              :rules="[rules.required]"
+	              validate-on="submit"
 	              :error-messages="error"
               />
             </VCol>
@@ -79,7 +88,7 @@ const isPasswordVisible = ref(false)
             <VCol cols="12">
               <VTextField
                 v-model="form.password"
-                label="Password"
+                :label="$t('label.password')"
                 placeholder="············"
                 :type="isPasswordVisible ? 'text' : 'password'"
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
@@ -92,14 +101,14 @@ const isPasswordVisible = ref(false)
               <div class="d-flex align-center justify-space-between flex-wrap mt-1 mb-4">
                 <VCheckbox
                   v-model="form.remember"
-                  label="Remember me"
+                  :label="$t('label.remember_me')"
                 />
 
                 <Link
                   class="text-primary ms-2 mb-1"
-                  to="/forgotten"
+                  href="/forgotten"
                 >
-                  Forgot Password?
+                  {{ $t('label.forgot_password') }}
                 </Link>
               </div>
 
@@ -109,7 +118,7 @@ const isPasswordVisible = ref(false)
                 type="submit"
 	              @click="login"
               >
-                Login
+                {{ $t('label.login') }}
               </VBtn>
             </VCol>
 
@@ -118,12 +127,12 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center text-base"
             >
-              <span>New on our platform?</span>
+              <span>{{ $t('login.new_on_our_platform') }}</span>
               <Link
                 class="text-primary ms-2"
-                to="/register"
+                href="/register"
               >
-                Create an account
+                {{ $t('label.register') }}
               </Link>
             </VCol>
 
@@ -132,7 +141,7 @@ const isPasswordVisible = ref(false)
               class="d-flex align-center"
             >
               <VDivider />
-              <span class="mx-4">or</span>
+              <span class="mx-4">{{ $t('common.or') }}</span>
               <VDivider />
             </VCol>
 
@@ -142,6 +151,7 @@ const isPasswordVisible = ref(false)
               class="text-center"
             >
               <AuthProvider />
+	            <LangSwitch class="float-right rollup" />
             </VCol>
           </VRow>
         </VForm>

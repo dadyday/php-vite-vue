@@ -1,0 +1,22 @@
+common:
+  or: or
+placeholder:
+  email: johndoe{'@'}example.com
+label:
+  email: email address
+  username: username
+  password: password
+  email-or-user: '@:label.email oder @:label.username'
+  remember_me: Remember me
+  login: Login
+  forgot_password: Forgot password?
+  register: Register
+login:
+  new_on_our_platform: Create new account?
+  title: My Fat Dashboard
+  welcome: Welcome
+  pleaseSignin: Please sign in yourself
+error:
+  back_to_home: Back to Home
+  validation:
+    field-required: required

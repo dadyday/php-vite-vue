@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import {createInertiaApp, Head, Link} from '@inertiajs/vue3'
-import {createApp, h} from 'vue'
+import {createApp, h} from 'vue' // 'vue/dist/vue.esm-bundler'
 import Layout from "@layouts/Dashboard.vue";
 import Error from "@pages/Error.vue";
 
@@ -8,6 +8,7 @@ import router from '@/router'
 import {createPinia} from 'pinia'
 import vuetify from '@/plugins/vuetify'
 import {loadFonts} from '@/plugins/webfontloader'
+import i18n from '@/i18n'
 
 import '@/@iconify/icons-bundle'
 import '@core-scss/template/index.scss'
@@ -36,6 +37,7 @@ createInertiaApp({
 			.use(plugin)
 			.use(router)
 			.use(createPinia())
+			.use(i18n)
 			.use(vuetify)
 			.component('Link', Link)
 			.component('Head', Head)

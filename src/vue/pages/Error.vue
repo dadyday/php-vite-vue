@@ -20,7 +20,7 @@ defineProps(['code', 'message', 'desc'])
     <div class="misc-avatar w-100 text-center">
       <VImg
         :src="misc404"
-        alt="Coming Soon"
+        :alt="$t('coming_soon')"
         :max-height="200"
         class="mx-auto"
       />
@@ -28,7 +28,7 @@ defineProps(['code', 'message', 'desc'])
         href="/"
         class="mt-10"
       >
-        Back to Home
+        {{ $t('error.back_to_home') }}
       </VBtn>
     </div>
   </div>

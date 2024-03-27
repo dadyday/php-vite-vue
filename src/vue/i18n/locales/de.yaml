@@ -1,0 +1,23 @@
+common:
+  or: oder
+placeholder:
+  email: maxmuster{'@'}beispiel.de
+label:
+  email: Email
+  username: Username
+  email-or-user: '@:label.email oder @:label.username'
+
+  password: Passwort
+  remember_me: Merken
+  login: Login
+  forgot_password: Passwort vergessen?
+  register: Registrieren
+login:
+  new_on_our_platform: Noch keinen Zugang?
+  title: Mein Fettes Dashboard
+  welcome: Willkommen
+  pleaseSignin: Log dich bitte ein
+error:
+  back_to_home: Zurück zur Startseite
+  validation:
+    field-required: Pflichtangabe

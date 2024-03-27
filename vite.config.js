@@ -3,9 +3,12 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import { fileURLToPath } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 import laravel from 'laravel-vite-plugin'
+import vueI18n from '@intlify/unplugin-vue-i18n/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,6 +25,11 @@ export default defineConfig({
           },
       },
     }),
+		vueI18n({
+			runtimeOnly: false,
+			include: 'src/vue/i18n/locales/**'
+			// resolve(dirname(fileURLToPath(import.meta.url)), './src/vue/i18n/locales/**')
+		}),
     vueJsx(),
 
     // Docs: https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin
@@ -33,7 +41,20 @@ export default defineConfig({
     Components({
       dirs: ['src/vue/@core/components'],
       dts: true,
+			resolvers: [
+				IconsResolver({
+					prefix: 'icon',
+					alias: {
+						flag: 'circle-flags',
+					}
+				})
+			],
     }),
+
+		Icons({
+			compiler: 'vue3',
+			autoInstall: true,
+		}),
 
     // Docs: https://github.com/antfu/unplugin-auto-import#unplugin-auto-import
     AutoImport({

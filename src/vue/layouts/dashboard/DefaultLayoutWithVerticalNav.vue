@@ -7,6 +7,7 @@ import VerticalNavLink from './VerticalNavLink.vue'
 import NavbarThemeSwitcher from './NavbarThemeSwitcher.vue'
 import UserProfile from './UserProfile.vue'
 import Footer from './Footer.vue'
+import LangSwitch from "@/components/LangSwitch.vue";
 
 const vuetifyTheme = useTheme()
 
@@ -63,6 +64,8 @@ const userMenu = computed(() => menu.filter((item) => {
         </div>
 
         <VSpacer />
+
+	      <LangSwitch />
 
         <IconBtn
           class="me-2"

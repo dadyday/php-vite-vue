@@ -5,3 +5,4 @@ node_modules
 temp
 /.eslintrc-auto-import.json
 /components.d.ts
+/_bak
