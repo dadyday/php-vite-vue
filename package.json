@@ -14,6 +14,7 @@
     "@casl/vue": "^2.2.0",
     "@floating-ui/dom": "1.2.8",
     "@inertiajs/vue3": "^1.0.15",
+    "@vue-macros/reactivity-transform": "^0.4.4",
     "@vueuse/core": "^10.1.2",
     "@vueuse/math": "^10.1.2",
     "apexcharts-clevision": "^3.28.5",
@@ -36,8 +37,8 @@
     "vue-router": "^4.2.1",
     "vue3-apexcharts": "^1.4.1",
     "vue3-perfect-scrollbar": "^1.6.0",
-    "vuetify": "3.3.1",
-    "webfontloader": "^1.6.28"
+    "vuetify": "3.4",
+    "webfontloader": "^1.6.28",
   },
   "devDependencies": {
     "@antfu/eslint-config-vue": "^0.39.1",

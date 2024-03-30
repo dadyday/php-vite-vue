@@ -12,6 +12,7 @@ final class RouterFactory {
 		$router = new RouteList;
 		$router->addRoute('/', 'App:main');
 		$router->addRoute('/login', 'App:login');
+		$router->addRoute('/bar?<n>', 'App:bar');
 		$router->addRoute('/<view>', 'App:default');
 		//$router->addRoute('/entities?[page=<page>]]', 'Main:entities');
 		return $router;

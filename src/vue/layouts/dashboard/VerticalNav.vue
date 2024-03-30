@@ -24,11 +24,11 @@ const props = defineProps({
 
 const { mdAndDown } = useDisplay()
 const refNav = ref()
-const route = useRoute()
-
-watch(() => route.path, () => {
-  props.toggleIsOverlayNavActive(false)
-})
+// const route = useRoute()
+//
+// watch(() => route.path, () => {
+//   props.toggleIsOverlayNavActive(false)
+// })
 
 const isVerticalNavScrolled = ref(false)
 const updateIsVerticalNavScrolled = val => isVerticalNavScrolled.value = val

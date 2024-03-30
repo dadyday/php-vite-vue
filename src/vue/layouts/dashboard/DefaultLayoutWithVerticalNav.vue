@@ -1,6 +1,6 @@
 <script setup>
-import {usePage} from "@inertiajs/vue3";
-import { useTheme } from 'vuetify'
+import {useTheme} from 'vuetify'
+import {useAppStore} from "@/store/app";
 import VerticalNavSectionTitle from './VerticalNavSectionTitle.vue'
 import VerticalNavLayout from './VerticalNavLayout.vue'
 import VerticalNavLink from './VerticalNavLink.vue'
@@ -10,28 +10,8 @@ import Footer from './Footer.vue'
 import LangSwitch from "@/components/LangSwitch.vue";
 
 const vuetifyTheme = useTheme()
+const $appStore = useAppStore()
 
-const menu = [
-	{ title: 'Foo'             , icon: 'bx-home'                , to: '/foo', roles: [] },
-	{ title: 'Bar'             , icon: 'mdi-account-cog-outline', to: '/bar', roles: ['admin'] },
-	{ heading: 'Pages' },
-	{ title: 'Login'           , icon: 'bx-log-in'              , to: '/login' },
-	{ title: 'Register'        , icon: 'bx-user-plus'           , to: '/register' },
-	{ title: 'Error'           , icon: 'bx-info-circle'         , to: '/no-existence' },
-	{ heading: 'User' },
-	{ title: 'Typography'      , icon: 'mdi-alpha-t-box-outline', to: '/typography' },
-	{ title: 'Icons'           , icon: 'bx-show'                , to: '/icons' },
-	{ title: 'Cards'           , icon: 'bx-credit-card'         , to: '/cards' },
-	{ title: 'Tables'          , icon: 'bx-table'               , to: '/tables' },
-	{ title: 'Form Layouts'    , icon: 'mdi-form-select'        , to: '/form-layouts' },
-];
-
-const user = usePage().props.user
-const userMenu = computed(() => menu.filter((item) => {
-	let ok = !item.roles?.length // allow if no role defined
-	if (!ok) item.roles.forEach((role) => ok |= user.roles.includes(role))
-	return ok
-}))
 </script>
 
 <template>
@@ -88,7 +68,7 @@ const userMenu = computed(() => menu.filter((item) => {
 
     <template #vertical-nav-content>
 	    <template
-				v-for="(item, index) in userMenu"
+				v-for="(item, index) in $appStore.userMenu"
 				:key="index"
 			>
 				<VerticalNavLink v-if="item.to" :item="item" />

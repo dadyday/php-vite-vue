@@ -2,51 +2,66 @@
 
 namespace App\Model;
 
+use Nette;
 use Nette\Database\Explorer;
+use Nette\Database\Conventions;
+use Nette\Caching\Storage;
+use Nette\Database\Table\ActiveRow;
 use Nette\Database\Table\Selection;
 
-class Model {
+abstract class Model extends Selection {
 
-	protected Explorer $oDb;
+	static string $table;
+	static string $class;
 
-	public function __construct(Explorer $oDbExplorer) {
-		$this->oDb = $oDbExplorer;
+	function __construct(
+		protected Explorer $oDb,
+		Conventions $oConventions,
+		?Storage $oCacheStorage = null
+	) {
+		parent::__construct($oDb, $oConventions, static::$table, $oCacheStorage);
+
+		# $this->dropTable();
+		# $this->createTable();
+		# if (!count($this)) {
+		# 	$this->createData();
+		# }
 	}
 
-	function create(string $name): Selection {
-		try {
-			$oTbl = $this->oDb->table($name);
-			return $oTbl;
-		}
-		catch (\Throwable $e) {}
-
-		$oTbl = $this->createTable($name);
-		if (!count($oTbl)) {
-			$this->createData($oTbl);
-		}
-		return $oTbl;
+	protected function createRow(array $row): ActiveRow	{
+		return new static::$class($row, $this);
 	}
 
-	function createTable(string $name): Selection {
+	function dropTable(): void  {
+		$this->oDb->query("DROP TABLE IF EXISTS ?name", static::$table);
+	}
+
+	function createTable(): void {
+		$sql = '';
+		$aField = (static::$class)::$aField;
+		foreach ($aField as $name => [$type]) {
+			$sql .= ",\n  $name $type";
+		}
+
 		$this->oDb->query("
 			CREATE TABLE IF NOT EXISTS ?name (
-				id INTEGER PRIMARY KEY,
-				name TEXT NOT NULL,
-				email TEXT NOT NULL UNIQUE
+				id INTEGER PRIMARY KEY $sql
 			)
-		", $name);
-		return $this->oDb->table($name);
+		", static::$table);
 	}
 
-	function createData(Selection $oTbl): void {
+	function createData(): void {
+		# Todo: use static::$class property annotations for fakes
+		$oTbl = $this->oDb->table(static::$table);
+		$aField = (static::$class)::$aField;
 		$oFaker = \Faker\Factory::create();
+
 		for ($id = 1; $id <= 81; $id++) {
 			$oFaker->seed($id); # always the same fakes
-			$aRow = [
-				'id' => $id,
-				'name' => $oFaker->name(),
-				'email' => $oFaker->email(),
-			];
+			$aRow = ['id' => $id];
+			foreach ($aField as $name => [$type, $func, $aArg]) {
+				$aRow[$name] = $oFaker->$func(...$aArg);
+			};
 			$oTbl->insert($aRow);
 		}
 	}

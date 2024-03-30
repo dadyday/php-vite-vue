@@ -9,6 +9,7 @@ import { defineConfig } from 'vite'
 import vuetify from 'vite-plugin-vuetify'
 import laravel from 'laravel-vite-plugin'
 import vueI18n from '@intlify/unplugin-vue-i18n/vite'
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -62,9 +63,10 @@ export default defineConfig({
         enabled: true,
         filepath: './.eslintrc-auto-import.json',
       },
-      imports: ['vue', 'vue-router', '@vueuse/core', '@vueuse/math', 'pinia'],
+      imports: ['vue', '@vueuse/core', '@vueuse/math', 'pinia'],
       vueTemplate: true,
     }),
+		ReactivityTransform(),
   ],
   define: { 'process.env': {} },
   resolve: {

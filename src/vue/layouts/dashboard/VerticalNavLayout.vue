@@ -7,7 +7,7 @@ export default defineComponent({
     const isOverlayNavActive = ref(false)
     const isLayoutOverlayVisible = ref(false)
     const toggleIsOverlayNavActive = useToggle(isOverlayNavActive)
-    const route = useRoute()
+    //const route = useRoute()
     const { mdAndDown } = useDisplay()
 
 
@@ -51,7 +51,7 @@ export default defineComponent({
         class: [
           'layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid',
           mdAndDown.value && 'layout-overlay-nav',
-          route.meta.layoutWrapperClasses,
+          // route?.meta?.layoutWrapperClasses ?? '',
         ],
       }, [
         verticalNav,
