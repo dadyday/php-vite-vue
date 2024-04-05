@@ -99,6 +99,7 @@ export default {
     variant: 'outlined',
     color: 'primary',
     hideDetails: 'auto',
+		density: "compact"
   },
   VAutocomplete: {
     variant: 'outlined',

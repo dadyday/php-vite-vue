@@ -6,6 +6,8 @@ namespace App\Presenters;
 
 
 use App\Model\Entities;
+use App\Utils\Filters;
+use App\Utils\Orders;
 use Nette\Utils\Paginator;
 use Nette\Security\AuthenticationException;
 
@@ -90,26 +92,63 @@ final class AppPresenter extends BasePresenter {
 
 
 
-	public function renderEntities(int $page = null, string $search = null, int $sleep = 3): void {
+	public function renderEntities(
+		int $page = null,
+		int $perPage = null,
+		string $search = null,
+		string $filter = null,
+		string $order = null,
+		int $sleep = 0
+	): void {
 
 		$oEntities = $this->oEntities;
-		if ($search) $oEntities->where('name LIKE ?', "%$search%");
+		$oEntities->generateFakeData(true);
+		$aParam = [];
+
+		// search
+		if ($search) {
+			$oEntities->where('name LIKE ?', "%$search%");
+			$aParam['search'] = $search;
+		}
+
+		// filter
+		$oFilters = new Filters($filter);
+		$oFilters->addCriteria($oEntities);
+		$aParam['filter'] = $oFilters->getParamString();
+
+		// order
+		$oOrders = new Orders($order);
+		$oOrders->addCriteria($oEntities);
+		$aParam['order'] = $oOrders->getParamString();
+
+
+		// pagination
+		static $defaultPage = 1, $defaultPerPage = 10;
+
+		$page ??= $defaultPage;
+		$perPage ??= $defaultPerPage;
+		if ($perPage < 0) $perPage = 100;
 
 		$oPaginator = (new Paginator())
-			->setPage($page ?? 1)
-			->setItemsPerPage(5)
+			->setPage($page)
+			->setItemsPerPage($perPage)
 			->setItemCount($oEntities->count())
 		;
 
+		if ($page != $defaultPage) $aParam['page'] = $page;
+		if ($perPage != $defaultPerPage) $aParam['perPage'] = $perPage;
+
+
+		// response
 		$aRow = $oEntities
-			->select('id, name, state')
-			->page($page ?? 1, 5)
+			->select('id, name, state, created')
+			->page($page, $perPage)
 			->fetchAssoc('id')
 		;
+		$params = http_build_query($aParam);
+		$params = $params ? '?'.$params : '';
 
-
-		sleep($sleep);
-		$this->render('Entities', '/entities?page='.($page ?? 1), [
+		$this->render('Entities', '/entities'.$params, [
 			'items' => array_values($aRow),
 			'pagination' => [
 				'page' => $oPaginator->page,
@@ -120,11 +159,33 @@ final class AppPresenter extends BasePresenter {
 				'to' => $oPaginator->lastItemOnPage,
 				'total' => $oPaginator->itemCount,
 			],
-			'filters' => [
-				'search' => $this->getRequest()->getParameter('search'),
-			],
+			'search' => $search,
+			'filters' => $oFilters->getResponseData(),
+			'orders' => $oOrders->getResponseData(),
 		]);
+
+		// sleep
+		$tm = microtime(true) + $sleep;
+		$lastCd = 0;
+		while (microtime(true) < $tm) {
+			$fp = fopen("php://output", 'w');
+			if (!$fp) break;
+			fwrite($fp, '');
+			fclose($fp);
+
+			if(connection_status() != CONNECTION_NORMAL) {
+				error_log('connection aborted');
+				break;
+			}
+
+			usleep(100);
+			$cd = round($tm - microtime(true));
+			if ($cd != $lastCd) error_log("$cd");
+			$lastCd = $cd;
+		}
 	}
+
+
 
 	/*
 		public function renderAssistant(): void {

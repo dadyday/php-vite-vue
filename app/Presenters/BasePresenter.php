@@ -93,7 +93,7 @@ class BasePresenter extends InertiaPresenter {
 
 		$this->aProp = $this->share($this->aProp);
 		$this->view = 'default';
-		bdump($this->__debugInfo());
+		bdump($this->__debugInfo(), '', [ 'depth' => 5, 'lazy' => false, 'collapsecount' => 20 ]);
 
 		parent::inertia($this->aProp, $this->component, $this->link);
 		parent::afterRender();

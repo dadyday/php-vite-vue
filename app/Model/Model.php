@@ -20,12 +20,15 @@ abstract class Model extends Selection {
 		?Storage $oCacheStorage = null
 	) {
 		parent::__construct($oDb, $oConventions, static::$table, $oCacheStorage);
+	}
 
-		# $this->dropTable();
-		# $this->createTable();
-		# if (!count($this)) {
-		# 	$this->createData();
-		# }
+	function generateFakeData(bool $force = false) {
+		if ($force) $this->dropTable();
+		$this->createTable();
+		if (!count($this)) {
+			$this->generateData();
+		}
+		$this->select('*');
 	}
 
 	protected function createRow(array $row): ActiveRow	{
@@ -50,19 +53,24 @@ abstract class Model extends Selection {
 		", static::$table);
 	}
 
-	function createData(): void {
+	function generateData(): void {
 		# Todo: use static::$class property annotations for fakes
-		$oTbl = $this->oDb->table(static::$table);
-		$aField = (static::$class)::$aField;
+		$aFieldDef = (static::$class)::$aField;
 		$oFaker = \Faker\Factory::create();
 
+		$aRow = [];
 		for ($id = 1; $id <= 81; $id++) {
 			$oFaker->seed($id); # always the same fakes
-			$aRow = ['id' => $id];
-			foreach ($aField as $name => [$type, $func, $aArg]) {
-				$aRow[$name] = $oFaker->$func(...$aArg);
+			$aField = ['id' => $id];
+			foreach ($aFieldDef as $name => [$type, $func, $aArg]) {
+				if (is_string($func)) $func = fn($oFaker, ...$aArg) => $oFaker->$func(...$aArg);
+				if (!is_callable($func)) throw new \LogicException("field '$name' has no valid generator func");
+				$value = $func($oFaker, ...$aArg);
+				if ($value instanceof \DateTime) $value = $value->format('Y-m-d');
+				$aField[$name] = $value;
 			};
-			$oTbl->insert($aRow);
+			$aRow[] = $aField;
 		}
+		$this->oDb->query('INSERT INTO ?name ?', static::$table, $aRow);
 	}
 }
