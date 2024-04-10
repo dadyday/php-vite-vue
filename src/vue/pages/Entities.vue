@@ -1,4 +1,5 @@
 <script setup>
+import DateRangePicker from "@/components/DateRangePicker.vue";
 import {router} from "@inertiajs/vue3";
 import _ from "lodash";
 import moment from "moment";
@@ -24,6 +25,13 @@ let focusses = reactive({})
 let page = $ref(props.pagination.page)
 let perPage = $ref(props.pagination.perPage)
 let search = $ref(props.search ?? '')
+let created = $computed({
+	get: () => {
+		if (!filters.created) return null
+		const [from, to] = filters.created.map((dt) => moment(dt).format(moment.HTML5_FMT.DATE))
+		return from + '..' + to
+	},
+})
 let filters = $ref(props.filters ?? {})
 let orders = $ref(props.orders ?? [])
 let sleep = $ref(0)
@@ -48,10 +56,12 @@ watch([
 	filters,
 	$$(orders),
 ], (...args) => {
-	console.log(args)
+	// console.log(args)
 	const order = _.map(orders, ({key, order}) => order === 'asc' || !order ? key : '!'+key).join(',')
-	const filter = _.map(filters, (value, key) => value ? key+':'+value : undefined).join(';')
-	loadPage({ page, perPage, search, filter, order, sleep })
+	const filter = [] //_.map(filters, (value, key) => value ? key+':'+value : undefined).join(';')
+	if (created) filter.push('created:'+created)
+	if (filters.state?.length) filter.push('state:'+filters.state)
+	loadPage({ page, perPage, search, filter: filter.join(';'), order, sleep })
 })
 
 onMounted(() => {
@@ -73,6 +83,13 @@ const headers = [
 		value: (item) => moment(item.created).format('dd, D. MMM YY'),
 		align: 'end',
 		sortable: true
+	},
+	{
+		title: 'Active',
+		value: 'active',
+		sortable: true,
+		align: 'center',
+		width: '5em'
 	},
 	{
 		title: 'State',
@@ -97,49 +114,10 @@ const stateColors = {
 	<Head :title="`Entities - Seite ${page}` + (search ? ` - Suche '${search}'` : '')"/>
 	<div>{{ orders }}</div>
 	<div>{{ filters }}</div>
+	<div>{{ focusses }}</div>
 	<VContainer>
 		<VRow>
 			<VSpacer />
-			<VCol :cols="focusses.created || filters.created ? 3 : 2" class="smooth-grow">
-				<VTextField
-					type="date"
-					v-model="filters.created"
-					v-model:focused="focusses.created"
-					prependInnerIcon="bx-calendar"
-					label="Filter"
-					placeholder=""
-					clearable
-				/>
-
-			</VCol>
-			<!--VCol :cols="createdFocus || createdDate ? 4 : 2" class="smooth-grow">
-				<VTextField
-					v-model="createdDate"
-					:x-focused="createdFocus"
-					label="Filter"
-					prependInnerIcon="bx-calendar"
-					density="compact"
-					x-readonly
-					clearable
-				>
-					<VMenu
-						v-model="createdFocus"
-						activator="parent"
-						transition="scale-transition"
-					>
-						<VDatePicker
-							v-if="createdFocus"
-							v-model="createdDate"
-							hideHeader
-							showWeek
-							showAdjacentMonths
-							tile
-							x-landscape
-							x-fullWidth
-						></VDatePicker>
-					</VMenu>
-				</VTextField>
-			</VCol -->
 			<VCol :cols="focusses.search || search ? 4 : 2" class="smooth-grow">
 				<VTextField
 					v-model="search"
@@ -151,6 +129,32 @@ const stateColors = {
 					clearable
 				/>
 			</VCol>
+
+			<VCol :cols="focusses.created || filters.created ? 3 : 2" class="smooth-grow">
+				<DateRangePicker
+					v-model="filters.created"
+					v-model:focused="focusses.created"
+					density="compact"
+				/>
+			</VCol>
+
+			<VCol :cols="focusses.state || filters.state?.length ? 4 : 2" class="smooth-grow">
+				<VSelect
+					v-model="filters.state"
+					:items="Object.keys(stateColors)"
+					label="State"
+					multiple
+					clearable
+					v-model:focused="focusses.state"
+				>
+					<template v-slot:selection="{ item }">
+						<v-chip :color="stateColors[item.value]">
+							{{ item.title }}
+						</v-chip>
+					</template>
+				</VSelect>
+			</VCol>
+
 			<VCol cols="1">
 				<VSlider
 					v-model="sleep"

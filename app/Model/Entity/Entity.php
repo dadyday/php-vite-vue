@@ -3,30 +3,19 @@
 namespace App\Model\Entity;
 
 
-use Nette\Database\Table\ActiveRow;
-use Nette\SmartObject;
+use Nette\Utils\DateTime;
 
 /**
  * @property-read bool $active
  */
-class Entity extends ActiveRow {
+class Entity extends \App\Model\Entity {
 
-	static $aField = [
-		'name' => ['text', 'name', []],
-		'state' => ['text', 'randomElement', [['open', 'waiting', 'closed']]],
-		'created' => ['date', 'dateTimeThisMonth', []],
-	];
-
-	protected int $id;
 	protected string $name;
 	protected string $state;
-	protected \DateTime $created;
+	protected DateTime $created;
 
-	function isActive() {
-		return !empty($this->state);
+	function isActive(): bool {
+		return $this->state !== 'closed';
 	}
 
-	function getCreated() {
-		return date('Y-m-d', $this->created);
-	}
 }

@@ -45,5 +45,5 @@ security:
 services:
 	- App\RouterFactory::createRouter
 
-	entities: App\Model\Entities
+	entities: App\Model\Repo\Entities
 

@@ -2,7 +2,6 @@
 
 namespace App\Utils;
 
-use App\Model\Model;
 use Nette\Database\Table\Selection;
 use Nette\SmartObject;
 use Nette\Utils\Strings;
@@ -10,7 +9,7 @@ use Nette\Utils\Strings;
 class Order {
 	use SmartObject;
 
-	public string $field = '';
+	public ?string $field = null;
 	public bool $desc = false;
 
 	function initParam(string $param): void {
@@ -19,6 +18,10 @@ class Order {
 
 		$this->field = $field;
 		$this->desc = !!$desc;
+	}
+
+	function addCriteria(Selection $oSelection): void {
+		if ($this->field) $oSelection->order("?order", [ $this->field => !$this->desc ]);
 	}
 }
 
@@ -43,7 +46,7 @@ class Orders {
 
 	function addCriteria(Selection $oSelection): void {
 		foreach ($this->aItem as $oItem) {
-			$oSelection->order("?order", [ $oItem->field => !$oItem->desc ]);
+			$oItem->addCriteria($oSelection);
 		}
 	}
 

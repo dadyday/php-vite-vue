@@ -71,6 +71,7 @@ export default {
     variant: 'outlined',
     color: 'primary',
     hideDetails: 'auto',
+		density: "compact",
   },
   VRangeSlider: {
     // set v-range-slider default color to primary

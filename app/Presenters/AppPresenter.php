@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Presenters;
 
-
-use App\Model\Entities;
+use App\Model\Repo\Entities;
+use App\Utils\Fields;
+use App\Utils\Filter;
 use App\Utils\Filters;
 use App\Utils\Orders;
 use Nette\Utils\Paginator;
 use Nette\Security\AuthenticationException;
+
 
 final class AppPresenter extends BasePresenter {
 
@@ -107,20 +109,20 @@ final class AppPresenter extends BasePresenter {
 
 		// search
 		if ($search) {
-			$oEntities->where('name LIKE ?', "%$search%");
+			$oSearchFilter = new Filter("name~%$search%");
+			$oEntities->addFilter($oSearchFilter); #where('name LIKE ?', "%$search%");
 			$aParam['search'] = $search;
 		}
 
 		// filter
 		$oFilters = new Filters($filter);
-		$oFilters->addCriteria($oEntities);
+		$oEntities->addFilters($oFilters);
 		$aParam['filter'] = $oFilters->getParamString();
 
 		// order
 		$oOrders = new Orders($order);
-		$oOrders->addCriteria($oEntities);
+		$oEntities->addOrders($oOrders);
 		$aParam['order'] = $oOrders->getParamString();
-
 
 		// pagination
 		static $defaultPage = 1, $defaultPerPage = 10;
@@ -132,24 +134,21 @@ final class AppPresenter extends BasePresenter {
 		$oPaginator = (new Paginator())
 			->setPage($page)
 			->setItemsPerPage($perPage)
-			->setItemCount($oEntities->count())
 		;
+		$oEntities->addPagination($oPaginator);
 
 		if ($page != $defaultPage) $aParam['page'] = $page;
 		if ($perPage != $defaultPerPage) $aParam['perPage'] = $perPage;
 
-
 		// response
-		$aRow = $oEntities
-			->select('id, name, state, created')
-			->page($page, $perPage)
-			->fetchAssoc('id')
-		;
-		$params = http_build_query($aParam);
+		$aProp = ['name', 'state', 'created', 'active'];
+		$aItem = $oEntities->fetchData($aProp);
+
+		$params = http_build_query($aParam, encoding_type: PHP_QUERY_RFC1738);
 		$params = $params ? '?'.$params : '';
 
 		$this->render('Entities', '/entities'.$params, [
-			'items' => array_values($aRow),
+			'items' => $aItem,
 			'pagination' => [
 				'page' => $oPaginator->page,
 				'perPage' => $oPaginator->itemsPerPage,
