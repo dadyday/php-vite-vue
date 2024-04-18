@@ -10,12 +10,13 @@ import vuetify from 'vite-plugin-vuetify'
 import laravel from 'laravel-vite-plugin'
 import vueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
+import { PrimeVueResolver } from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     laravel({
-      input: ['src/vue/main.js'],
+      input: ['src/main.js'],
       refresh: true,
     }),
     vue({
@@ -28,19 +29,20 @@ export default defineConfig({
     }),
 		vueI18n({
 			runtimeOnly: false,
-			include: 'src/vue/i18n/locales/**'
-			// resolve(dirname(fileURLToPath(import.meta.url)), './src/vue/i18n/locales/**')
+			include: 'src/i18n/locales/**'
+			// resolve(dirname(fileURLToPath(import.meta.url)), './src/i18n/locales/**')
 		}),
     vueJsx(),
 
     // Docs: https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin
     vuetify({
-      styles: {
-        configFile: 'src/styles/variables/_vuetify.scss',
-      },
+      //styles: {
+        // configFile: 'src/styles/variables/_vuetify.scss',
+				// configFile: 'src/styles/settings.scss',
+      //},
     }),
     Components({
-      dirs: ['src/vue/@core/components'],
+      // dirs: ['src/vue/@core/components'],
       dts: true,
 			resolvers: [
 				IconsResolver({
@@ -48,6 +50,9 @@ export default defineConfig({
 					alias: {
 						flag: 'circle-flags',
 					}
+				}),
+				PrimeVueResolver({
+					importTheme: "aura-light-green",
 				})
 			],
     }),
@@ -71,16 +76,19 @@ export default defineConfig({
   define: { 'process.env': {} },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src/vue', import.meta.url)),
-      '@core-scss': fileURLToPath(new URL('./src/styles/@core', import.meta.url)),
-      '@core': fileURLToPath(new URL('./src/vue/@core', import.meta.url)),
-      '@layouts': fileURLToPath(new URL('./src/vue/layouts', import.meta.url)),
-      '@pages': fileURLToPath(new URL('./src/vue/pages', import.meta.url)),
-      '@images': fileURLToPath(new URL('./src/images/', import.meta.url)),
-      '@styles': fileURLToPath(new URL('./src/styles/', import.meta.url)),
-      '@configured-variables': fileURLToPath(new URL('./src/styles/variables/_template.scss', import.meta.url)),
-      '@axios': fileURLToPath(new URL('./src/vue/plugins/axios', import.meta.url)),
-      'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+			'@plugins': fileURLToPath(new URL('./src/plugins', import.meta.url)),
+			'@images': fileURLToPath(new URL('./src/images/', import.meta.url)),
+			'@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
+			'@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+			'@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+			'@styles': fileURLToPath(new URL('./src/styles/', import.meta.url)),
+			'@variables': fileURLToPath(new URL('./src/styles/variables', import.meta.url)),
+
+      // '@core-scss': fileURLToPath(new URL('./src/styles/@core', import.meta.url)),
+      // '@core': fileURLToPath(new URL('./src/vue/@core', import.meta.url)),
+      // '@axios': fileURLToPath(new URL('./src/vue/plugins/axios', import.meta.url)),
+      // 'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
     },
   },
   build: {
@@ -89,7 +97,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['vuetify'],
     entries: [
-      './src/vue/**/*.vue',
+      './src/**/*.vue',
     ],
   },
 })

@@ -22,6 +22,7 @@ class BasePresenter extends InertiaPresenter {
 	function startup(): void {
 		$view = $this->getParameter('view');
 		if ($view) $this->setView($view);
+		//$this->link = $this->getHttpRequest()->getUrl()->absoluteUrl;
 		parent::startup();
 	}
 
