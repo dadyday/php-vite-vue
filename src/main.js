@@ -13,22 +13,16 @@ import vuetify from '@plugins/vuetify'
 import primevue from '@plugins/primevue';
 
 
-//import '@styles/main.scss'
-//import '@core-scss/template/index.scss'
-//import '@layouts/styles/index.scss'
-//import '@styles/styles.scss'
-
 import {loadFonts} from '@plugins/webfontloader'
 loadFonts()
 
-//import Layout from "@layouts/Sneat.vue";
-import Layout from "@layouts/Sakai.vue";
+import Layout from "@layouts/Sneat.vue";
+//import Layout from "@layouts/Sakai.vue";
 import Error from "@pages/Error.vue";
 
+
 /*
-// import '@/@iconify/icons-bundle'
-// import '@core-scss/template/index.scss'
-// import '@layouts/styles/index.scss'
+import '@/@iconify/icons-bundle'
 */
 
 createInertiaApp({

@@ -1,5 +1,5 @@
 @use "placeholders";
-@use "variables";
+@use "@sneat/variables" as variables;
 
 @mixin rtl {
   @if variables.$enable-rtl-styles {

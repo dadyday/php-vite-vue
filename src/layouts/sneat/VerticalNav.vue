@@ -91,8 +91,8 @@ const handleNavScroll = evt => {
 </template>
 
 <style lang="scss">
-@use "./styles/variables";
-@use "./styles/mixins";
+@use "@sneat/variables" as variables;
+@use "@sneat/styles/mixins";
 
 // 👉 Vertical Nav
 .layout-vertical-nav {

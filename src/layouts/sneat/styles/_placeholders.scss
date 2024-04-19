@@ -1,5 +1,5 @@
 // placeholders
-@use "variables";
+@use "@sneat/variables" as variables;
 
 %boxed-content {
   @at-root #{&}-spacing {

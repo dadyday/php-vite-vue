@@ -1,8 +1,8 @@
 // These are styles which are both common in layout w/ vertical nav & horizontal nav
-@use "rtl";
-@use "placeholders";
-@use "mixins";
-@use "variables";
+@use "@sneat/styles/rtl";
+@use "@sneat/styles/placeholders";
+@use "@sneat/styles/mixins";
+@use "@sneat/variables" as variables;
 
 html,
 body {

@@ -1,5 +1,5 @@
 <script setup>
-import { kFormatter } from '@core/utils/formatters'
+import { kFormatter } from '@sneat/utils/formatters'
 
 const props = defineProps({
   title: {

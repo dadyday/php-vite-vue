@@ -82,13 +82,8 @@ export default defineConfig({
 			'@layouts': fileURLToPath(new URL('./src/layouts', import.meta.url)),
 			'@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
 			'@components': fileURLToPath(new URL('./src/components', import.meta.url)),
-			'@styles': fileURLToPath(new URL('./src/styles/', import.meta.url)),
-			'@variables': fileURLToPath(new URL('./src/styles/variables', import.meta.url)),
 
-      // '@core-scss': fileURLToPath(new URL('./src/styles/@core', import.meta.url)),
-      // '@core': fileURLToPath(new URL('./src/vue/@core', import.meta.url)),
-      // '@axios': fileURLToPath(new URL('./src/vue/plugins/axios', import.meta.url)),
-      // 'apexcharts': fileURLToPath(new URL('node_modules/apexcharts-clevision', import.meta.url)),
+			'@sneat': fileURLToPath(new URL('./src/layouts/sneat/', import.meta.url)),
     },
   },
   build: {
