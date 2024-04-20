@@ -14,7 +14,7 @@ const props = defineProps({
   >
     <Component
       :is="item.to ? 'Link' : 'a'"
-      :x-to="item.to"
+      :to="item.to"
       :href="item.to"
     >
       <VIcon
@@ -23,7 +23,7 @@ const props = defineProps({
       />
       <!-- 👉 Title -->
       <span class="nav-item-title">
-        {{ item.title }}
+        {{ item.label }}
       </span>
     </Component>
   </li>

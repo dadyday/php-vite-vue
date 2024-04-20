@@ -1,22 +1,13 @@
 import {usePage} from "@inertiajs/vue3";
+import {useSessionStorage} from "@vueuse/core";
 import {defineStore} from "pinia";
 import {computed, ref} from "vue";
+// import menu from "./app/demoMenu";
+import menu from "./app/appMenu";
 
-const menu = [
-	{ title: 'Entities'    , icon: 'bx-atom'                , to: '/entities' },
-	{ title: 'Foo'         , icon: 'bx-home'                , to: '/foo', roles: [] },
-	// { title: 'Bar'      , icon: 'mdi-account-cog-outline', to: '/bar', roles: ['admin'] },
-	{ heading: 'Pages' },
-	{ title: 'Login'       , icon: 'bx-log-in'              , to: '/login' },
-	{ title: 'Register'    , icon: 'bx-user-plus'           , to: '/register' },
-	{ title: 'Error'       , icon: 'bx-info-circle'         , to: '/no-existence' },
-	{ heading: 'User' },
-	{ title: 'Typography'  , icon: 'mdi-alpha-t-box-outline', to: '/typography' },
-	{ title: 'Icons'       , icon: 'bx-show'                , to: '/icons' },
-	{ title: 'Cards'       , icon: 'bx-credit-card'         , to: '/cards' },
-	{ title: 'Tables'      , icon: 'bx-table'               , to: '/tables' },
-	{ title: 'Form Layouts', icon: 'mdi-form-select'        , to: '/form-layouts' },
-];
+import Sneat from "@layouts/Sneat.vue";
+import Sakai from "@layouts/Sakai.vue";
+
 
 export const useAppStore = defineStore('app', () => {
 
@@ -27,7 +18,15 @@ export const useAppStore = defineStore('app', () => {
 		return ok
 	}))
 
+	const layouts = {
+		sneat: Sneat,
+		sakai: Sakai,
+	}
+	const layoutName = useSessionStorage('default-layout', 'sneat')
+	const layout = computed(() => layouts[layoutName.value])
+
 	return {
-		user, userMenu
+		user, userMenu,
+		layouts, layoutName, layout,
 	}
 })

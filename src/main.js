@@ -5,20 +5,22 @@ import BadgeDirective from "primevue/badgedirective";
 import Ripple from "primevue/ripple";
 import StyleClass from "primevue/styleclass";
 import {createApp, h} from 'vue' // 'vue/dist/vue.esm-bundler'
-import {createPinia} from 'pinia'
 import i18n from '@/i18n'
 import router from '@/router'
 
 import vuetify from '@plugins/vuetify'
 import primevue from '@plugins/primevue';
 
+import {createPinia} from 'pinia'
+const store = createPinia()
+import {useAppStore} from "@/store/app";
+
 
 import {loadFonts} from '@plugins/webfontloader'
 loadFonts()
 
-import Layout from "@layouts/Sneat.vue";
-//import Layout from "@layouts/Sakai.vue";
 import Error from "@pages/Error.vue";
+import Default from "@layouts/Default.vue";
 
 
 /*
@@ -27,7 +29,7 @@ import '@/@iconify/icons-bundle'
 
 createInertiaApp({
 	resolve: (name) => {
-		const pages = import.meta.glob('./pages/*.vue', {eager: true})
+		const pages = import.meta.glob('./pages/**/*.vue', {eager: true})
 		const dirs =	import.meta.glob('./pages/*/_index.vue', {eager: true})
 		let page =
 			pages[`./pages/${name}.vue`]?.default ??
@@ -36,14 +38,15 @@ createInertiaApp({
 			console.error(`resolving page '${name}' failed`)
 			page = Error
 		}
-		page.layout ??= Layout
+
+		page.layout = Default
 		return page
 	},
 	setup({el, App, props, plugin}) {
 		createApp({render: () => h(App, props)})
 			.use(plugin)
+			.use(store)
 			.use(router)
-			.use(createPinia())
 			.use(i18n)
 			.use(vuetify)
 			.use(primevue, {

@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onBeforeMount, watch } from 'vue';
-//import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useLayout } from './composables/layout';
 
-//const route = useRoute();
+const route = useRoute();
 
 const { layoutConfig, layoutState, setActiveMenuItem, onMenuToggle } = useLayout();
 
@@ -65,7 +65,7 @@ const itemClick = (event, item) => {
 };
 
 const checkActiveRoute = (item) => {
-    return false //route.path === item.to;
+    return route.path === item.to;
 };
 </script>
 

@@ -84,6 +84,7 @@ export default defineConfig({
 			'@components': fileURLToPath(new URL('./src/components', import.meta.url)),
 
 			'@sneat': fileURLToPath(new URL('./src/layouts/sneat/', import.meta.url)),
+			'@sakai': fileURLToPath(new URL('./src/layouts/sakai/', import.meta.url)),
     },
   },
   build: {

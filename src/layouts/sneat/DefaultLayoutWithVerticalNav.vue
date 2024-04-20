@@ -8,6 +8,7 @@ import NavbarThemeSwitcher from './NavbarThemeSwitcher.vue'
 import UserProfile from './UserProfile.vue'
 import Footer from './Footer.vue'
 import LangSwitch from "@/components/LangSwitch.vue";
+import LayoutSwitch from "@components/LayoutSwitch.vue";
 
 const vuetifyTheme = useTheme()
 const $appStore = useAppStore()
@@ -60,7 +61,9 @@ const $appStore = useAppStore()
           <VIcon icon="bx-bell" />
         </IconBtn>
 
-        <NavbarThemeSwitcher class="me-2" />
+        <LayoutSwitch class="me-2" />
+
+	      <NavbarThemeSwitcher class="me-2" />
 
         <UserProfile />
       </div>
@@ -71,8 +74,13 @@ const $appStore = useAppStore()
 				v-for="(item, index) in $appStore.userMenu"
 				:key="index"
 			>
-				<VerticalNavLink v-if="item.to" :item="item" />
-				<VerticalNavSectionTitle v-else :item="item" />
+		    <VerticalNavSectionTitle v-if="item.items" :item="item" />
+		    <VerticalNavLink v-if="item.items?.length"
+			    v-for="(subitem, index) in item.items ?? []"
+			    :key="index"
+			    :item="subitem"
+		    />
+		    <VerticalNavLink v-else :item="item" />
 			</template>
     </template>
 

@@ -60,6 +60,7 @@ const handleNavScroll = evt => {
         >
           <div
             class="d-flex"
+	          style="height: 2rem; width: 2rem"
             v-html="logo"
           />
 
