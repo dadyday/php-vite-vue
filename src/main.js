@@ -9,12 +9,11 @@ import i18n from '@/i18n'
 import router from '@/router'
 
 import vuetify from '@plugins/vuetify'
-import primevue from '@plugins/primevue';
+import {primeVue, primeOptions} from '@plugins/primevue';
+// import Demo from '@/presets/demo';
 
 import {createPinia} from 'pinia'
 const store = createPinia()
-import {useAppStore} from "@/store/app";
-
 
 import {loadFonts} from '@plugins/webfontloader'
 loadFonts()
@@ -39,7 +38,7 @@ createInertiaApp({
 			page = Error
 		}
 
-		page.layout = Default
+		page.layout ??= Default
 		return page
 	},
 	setup({el, App, props, plugin}) {
@@ -49,10 +48,7 @@ createInertiaApp({
 			.use(router)
 			.use(i18n)
 			.use(vuetify)
-			.use(primevue, {
-				ripple: true,
-				inputStyle: "filled",
-			})
+			.use(primeVue, primeOptions)
 			.directive('tooltip', Tooltip)
 			.directive('badge', BadgeDirective)
 			.directive('ripple', Ripple)

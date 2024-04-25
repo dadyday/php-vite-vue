@@ -6,3 +6,4 @@ temp
 /.eslintrc-auto-import.json
 /components.d.ts
 /_bak
+/src/auto-imports.d.ts

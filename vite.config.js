@@ -42,7 +42,7 @@ export default defineConfig({
       //},
     }),
     Components({
-      // dirs: ['src/vue/@core/components'],
+
       dts: true,
 			resolvers: [
 				IconsResolver({
@@ -70,6 +70,10 @@ export default defineConfig({
       },
       imports: ['vue', '@vueuse/core', '@vueuse/math', 'pinia'],
       vueTemplate: true,
+			dirs: [
+				'src/components/**'
+			],
+			dts: './src/auto-imports.d.ts'
     }),
 		ReactivityTransform(),
   ],

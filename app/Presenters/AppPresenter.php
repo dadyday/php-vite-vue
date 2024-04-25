@@ -27,7 +27,7 @@ final class AppPresenter extends BasePresenter {
 			$this->view('Login');
 			return;
 		}
-		$this->view('Start');
+		$this->view('Desk');
 	}
 
 	function share(array $aProp): array {
@@ -63,7 +63,7 @@ final class AppPresenter extends BasePresenter {
 			if (!$userId || !$password) throw new AuthenticationException('user and/or password was empty');
 
 			$oUser->login($userId, $password);
-			$this->view('Start', '/', [
+			$this->view('Desk', '/', [
 				'lastLogin' => $oUser->identity->lastLogin ?? null
 			]);
 			$oUser->identity->lastLogin = date('Y-m-d H:i:s');
@@ -80,6 +80,8 @@ final class AppPresenter extends BasePresenter {
 		if (!$oUser->isLoggedIn()) {
 			$this->render('Login', '/');
 		}
+		$comp = ucfirst($view);
+		$this->render($comp);
 	}
 
 	function renderFoo() {

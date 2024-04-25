@@ -1,5 +1,6 @@
 export default [
 	{ label: 'Home', items: [
+			{ label: 'Start'       , icon: 'bx-atom'                , to: '/start' },
 			{ label: 'Entities'    , icon: 'bx-atom'                , to: '/entities' },
 			{ label: 'Foo'         , icon: 'bx-home'                , to: '/foo', roles: [] },
 			{ label: 'Bar'         , icon: 'mdi-account-cog-outline', to: '/bar', roles: ['admin'] },

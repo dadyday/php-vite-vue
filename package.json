@@ -2,13 +2,14 @@
   "name": "sneat-vuetify-vuejs-laravel-admin-template",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "serve": "vite preview",
     "build": "vite build",
     "lint": "eslint . -c .eslintrc.js --fix --ext .ts,.js,.vue,.tsx,.jsx",
     "build:icons": "node src/vue/@iconify/build-icons.js",
     "dev": "vite",
-    "postinstall": "npm run build:icons"
+    "x-postinstall": "npm run build:icons"
   },
   "dependencies": {
     "@casl/ability": "^6.7.1",
@@ -24,7 +25,9 @@
     "axios": "1.4.0",
     "axios-mock-adapter": "^1.21.4",
     "chart.js": "^4.1.2",
+    "element-resize-detector": "^1.2.4",
     "eslint-import-resolver-alias": "^1.1.2",
+    "grid-layout-plus": "^1.0.4",
     "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

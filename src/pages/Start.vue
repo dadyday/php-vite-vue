@@ -1,10 +1,4 @@
 <script setup>
-import AnalyticsCongratulations from './start/AnalyticsCongratulations.vue'
-import AnalyticsFinanceTabs from './start/AnalyticsFinanceTab.vue'
-import AnalyticsOrderStatistics from './start/AnalyticsOrderStatistics.vue'
-import AnalyticsProfitReport from './start/AnalyticsProfitReport.vue'
-import AnalyticsTotalRevenue from './start/AnalyticsTotalRevenue.vue'
-import AnalyticsTransactions from './start/AnalyticsTransactions.vue'
 
 // 👉 Images
 import chart from '@images/cards/chart-success.png'
