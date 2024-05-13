@@ -52,7 +52,7 @@ export default defineConfig({
 					}
 				}),
 				PrimeVueResolver({
-					importTheme: "aura-light-green",
+					// importTheme: "lara-dark-teal",
 				})
 			],
     }),

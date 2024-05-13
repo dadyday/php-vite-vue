@@ -8,15 +8,14 @@
 	</div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .tile-card {
 	height: inherit;
-	.v-card {
+	:deep(.v-card) {
 		height: inherit !important;
 		overflow: hidden;
 		&:hover {
-			overflow: auto !important;
-			@apply
+			//overflow: auto !important;
 		}
 	}
 }
